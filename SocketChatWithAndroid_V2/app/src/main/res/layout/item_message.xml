@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="2"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/img_head_item"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="9"
+        android:orientation="vertical"
+        android:layout_height="60dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我："
+            android:layout_marginTop="5dp"
+            android:id="@+id/tv_name_item"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:id="@+id/tv_content_item"
+            android:text="哈哈哈哈哈哈哈"/>
+    </LinearLayout>
+
+
+</LinearLayout>

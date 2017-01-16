@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_sockettest" default="compile.module.sockettest">
+  <dirname property="module.sockettest.basedir" file="${ant.file.module_sockettest}"/>
+  
+  <property name="module.jdk.home.sockettest" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.sockettest" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.sockettest" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.sockettest" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
+  
+  <property name="sockettest.output.dir" value="${module.sockettest.basedir}/out/production/socketTest"/>
+  <property name="sockettest.testoutput.dir" value="${module.sockettest.basedir}/out/test/socketTest"/>
+  
+  <path id="sockettest.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="sockettest.module.production.classpath">
+    <path refid="${module.jdk.classpath.sockettest}"/>
+    <path refid="library.json-lib-2.4-jdk15.classpath"/>
+  </path>
+  
+  <path id="sockettest.runtime.production.module.classpath">
+    <pathelement location="${sockettest.output.dir}"/>
+    <path refid="library.json-lib-2.4-jdk15.classpath"/>
+  </path>
+  
+  <path id="sockettest.module.classpath">
+    <path refid="${module.jdk.classpath.sockettest}"/>
+    <pathelement location="${sockettest.output.dir}"/>
+    <path refid="library.json-lib-2.4-jdk15.classpath"/>
+  </path>
+  
+  <path id="sockettest.runtime.module.classpath">
+    <pathelement location="${sockettest.testoutput.dir}"/>
+    <pathelement location="${sockettest.output.dir}"/>
+    <path refid="library.json-lib-2.4-jdk15.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.sockettest">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.sockettest">
+    <patternset refid="excluded.from.module.sockettest"/>
+  </patternset>
+  
+  <path id="sockettest.module.sourcepath">
+    <dirset dir="${module.sockettest.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.sockettest" depends="compile.module.sockettest.production,compile.module.sockettest.tests" description="Compile module socketTest"/>
+  
+  <target name="compile.module.sockettest.production" depends="register.custom.compilers" description="Compile module socketTest; production classes">
+    <mkdir dir="${sockettest.output.dir}"/>
+    <javac2 destdir="${sockettest.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.sockettest}/javac">
+      <compilerarg line="${compiler.args.sockettest}"/>
+      <bootclasspath refid="sockettest.module.bootclasspath"/>
+      <classpath refid="sockettest.module.production.classpath"/>
+      <src refid="sockettest.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.sockettest"/>
+    </javac2>
+    
+    <copy todir="${sockettest.output.dir}">
+      <fileset dir="${module.sockettest.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.sockettest.tests" depends="register.custom.compilers,compile.module.sockettest.production" description="compile module socketTest; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.sockettest" description="cleanup module">
+    <delete dir="${sockettest.output.dir}"/>
+    <delete dir="${sockettest.testoutput.dir}"/>
+  </target>
+</project>
